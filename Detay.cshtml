@@ -1,0 +1,44 @@
+﻿@using wizardcms.Models
+@{
+   
+    Layout = "~/Views/Shared/Home.cshtml";
+    var detay = ViewData["detay"] as postDetail;
+
+    var path = Request.CurrentExecutionFilePath.ToString();
+    var ayrac = path.Split('/');
+    int pathType = 0;
+    if (path == "/" || path == "" || path == "en")
+    {
+        path = "tr";
+        pathType = 1;
+    }
+    else
+    {
+        string newPath = path.Substring(0, 3);
+        if (newPath == "/en")
+        {
+            path = "en";
+            pathType = 2;
+        }
+        else if (newPath == "/ru")
+        {
+            path = "ru";
+            pathType = 3;
+        }
+        else
+        {
+            path = "tr";
+            pathType = 1;
+        }
+    } 
+}
+
+<section class="detayX">
+<div class="container">
+    @if (@detay != null)
+    {
+        @MvcHtmlString.Create(detay.Body)
+    }
+
+</div>
+    </section>

@@ -1,0 +1,152 @@
+﻿@using wizardcms.Models
+@{
+    ViewBag.Title = "İlçe Yönetimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var bolgeIlceList = (List<bolgeIlceHavalimaniDto>)ViewData["bolgeIlceList"];
+    
+}
+<script language="javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $.getJSON("/admin/tr/bolgeList", function (bolgelistesi) {
+
+            $.each(bolgelistesi, function (index, bolge) {
+                $('#bolgeId').append($('<option/>', {
+                    value:bolge.RecordId,
+                    text: bolge.Name
+                }));
+            });
+        });
+
+        $('#bolgeId').change(function () {
+
+
+            $("#ilceGrupId td").each(function () {
+                
+                this.remove();
+            });
+
+            var bolgeId = $("#bolgeId").val();
+           // alert(bolgeId);
+            $.getJSON("/admin/tr/ilceList?id=" + bolgeId, function (ilceListesi) {
+
+                $.each(ilceListesi, function (index, ilce) {
+
+
+                    $('#ilceGrupId').append($('<td></td>', {
+                        text: ilce.Name+' ,'
+                    }));
+                });
+            });
+            
+
+        });
+
+    });
+</script>
+
+<div class="form-group" style="text-align:right;" id="new-post-btn">
+    <span id="addNewPostButton" class="btn btn-success">Ekle</span>
+</div>
+<div class="row">
+    <div class="col-sm-12" id="new-post">
+        <div class="panel">
+            <div class="panel-heading">
+                İlçe İçeriği
+                <span class="tools pull-right">
+                    <a class="fa fa-chevron-down" href="javascript:;"></a>
+                    <a class="fa fa-cog" href="javascript:;"></a>
+                    <a class="fa fa-times" href="javascript:;"></a>
+                </span>
+            </div>
+            <div class="panel-body">
+                @{string urlAction = "/Admin/tr/ilceYonetimiCreateorUpdate";}
+                <form method="post" enctype="multipart/form-data" action="@urlAction">
+                    @Html.ValidationSummary()
+                    <div class="form-group">
+                        <select id="bolgeId" class="form-control bannerType"></select>
+                     @*   @Html.DropDownList("BolgeId", null, new {@class="form-control bannerType", onclick="bolgeFunc()"})*@
+                        
+                    </div>
+                    
+                    <div class="form-group">
+                        Bağlı olan ilçeler;
+                        
+                        <p id="ilceGrupId"></p>
+
+                       @* <select id="ilceGrupId" class="form-control bannerType"></select>*@
+                     
+                    </div>
+
+                    
+                    <div class="form-group">
+                        @Html.DropDownList("HavalimaniId", null, new {@class="form-control bannerType" })
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <input type="text" name="ilceAdi" id="ilceAdi" class="form-control" placeholder="İlçe Adı" />
+                    </div>
+                    
+                     
+                    @* <div class="form-group">
+                        <input type="text" name="BannerUrl" id="BannerUrl" class="form-control" placeholder="Logo URL" />
+                    </div>*@
+                
+                    <button type="submit" data-toggle="modal" class="btn btn-success">
+                        Kaydet
+                    </button>
+                    <a href="/Admin/tr/ilceYonetimi" class= "btn btn-danger">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                İlçeler
+                <span class="tools pull-right">
+                    <a class="fa fa-chevron-down" href="javascript:;"></a>
+                    <a class="fa fa-cog" href="javascript:;"></a>
+                    <a class="fa fa-times" href="javascript:;"></a>
+                </span>
+            </div>
+            <div class="panel-body">
+                <div class="adv-table">
+                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                        <thead>
+                            <tr>
+                                <th>Bölge</th>
+                                <th>İlçe</th>
+                                <th>Havalimanı</th>
+                               @* <th>Düzenle</th>*@
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            @foreach (var item in bolgeIlceList)
+                            {
+                                <tr class="gradeA">
+                                    <td>@item.BolgeAdi</td>
+                                    <td>@item.ilceAdi</td>
+                                    <td>@item.HavalimaniAdi</td>
+                                  
+                                  @*  <td class="center hidden-phone ">
+                                        <a class="fa fa-pencil" href="SettingsSikcaSorulanSorularDetail?id=@item.RecordId"> <span>Düzenle</span></a>
+                                    </td>
+                                    <td class="center hidden-phone ">
+                                        <a class="fa fa-trash-o" href="DeleteSikcaSorulanSorular?id=@item.RecordId"> <span>Sil</span></a>
+                                    </td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

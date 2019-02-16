@@ -1,0 +1,37 @@
+﻿@using wizardcms.Models
+@{
+  
+    Layout = "~/Views/Shared/Home.cshtml";
+
+    var turDetay = ViewData["turDetay"] as turDto;
+    var turGorseller = (List<turDto>)ViewData["turGorseller"];
+}
+ <main style="display: inline-block; width: 100%;">
+         <section id="tour-detail">
+           <div id="p-t-b"></div>
+             <div id="p-t-c" class="container">
+                 <div class="full-c-b c-b1">@turDetay.TurAdi</div>
+                 <div class="col-9">
+                     
+                     <div class="metin">
+                         @MvcHtmlString.Create(turDetay.Body)
+                     </div>
+                 </div>
+                 <div class="col-3">
+      
+                     <div class="picture-container banner-s"><i class="arrow-corner"><p>@turDetay.TurZamani</p></i><i class="d-b"></i><h2>@turDetay.TurAdi</h2><img src="@turDetay.MajorPath" /></div>
+                     
+
+                 </div>
+                 <div class="picture-container gallery">
+                         @foreach (var item in turGorseller)
+                         {
+                              <a class="fancybox" href="@item.Path" data-fancybox-group="gallery2"><img src="@item.Path" /></a>
+                         }
+                        
+                       
+                     </div>
+             </div>
+    
+       </section>
+    </main>

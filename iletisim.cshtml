@@ -1,0 +1,160 @@
+﻿@using wizardcms.Models
+@{
+    ViewBag.Title = "İletişim";
+    Layout = "~/Views/Shared/Home.cshtml";
+
+    string ss = ViewBag.message;
+    var path = Request.CurrentExecutionFilePath.ToString();
+    if (Request.QueryString["durum"]=="success")
+    {
+        ViewBag.success = "1";
+    }
+    var ayrac = path.Split('/');
+    int pathType = 0;
+    if (path == "/" || path == "" || path == "en")
+    {
+        path = "tr";
+        pathType = 1;
+    }
+    else
+    {
+        string newPath = path.Substring(0, 3);
+        if (newPath == "/en")
+        {
+            path = "en";
+            pathType = 2;
+        }
+        else if (newPath == "/ru")
+        {
+            path = "ru";
+            pathType = 3;
+        }
+        else
+        {
+            path = "tr";
+            pathType = 1;
+        }
+    }   
+    }
+
+
+
+<section id="contactForm">
+    <div id="p-t-b"></div>
+    @if (@path == "tr")
+    {
+         <div id="p-t-c" class="container">
+        
+        @if (ViewBag.success == "1")
+        {
+           <div class="success-container">
+    <div class="success-inner">
+    Mesajınız bize ulaştı. En kısa sürede size dönüş yapacağız.
+    </div>
+</div>
+        }
+
+        <h1>İletişim</h1>
+        <h3><b>İSTANBUL HAVALİMANI TRANSFER</b></h3>
+        <p>Merkez Mah. 2.Bağlar Sok. No:13 D:11 Gaziosmanpaşa / İstanbul<br />
+            <b>Telefon :</b> +90 212 417 1047<br />
+            <b>E-Posta :</b> info@transferistanbul.com.tr<br /><br />
+
+            <b>7/24 Uygun</b></p>
+        <div class="c-p-c">
+            <div class="a-d-c">
+                <div class="a-circle-c"><img src="/Content/images/c-man-icon.png" alt="phone-icon" /></div>
+                <p><b>Şükrü Türkkan</b><br />+90 539.601.1560</p>
+            </div>
+            <div class="a-d-c">
+                <div class="a-circle-c"><img src="/Content/images/c-man-icon.png" alt="phone-icon" /></div>
+                <p><b>Mahmut Doğru</b><br />+90 537.724.0271</p>
+            </div>
+        </div>
+        <form action="/@path/iletisimSend" method="post" name="form1" id="form1">
+            <input type="text" placeholder="Ad Soyad" id="NameSurname" name="NameSurname" required/>
+            <input type="tel" placeholder="Telefon" id="Phone" name="Phone" maxlength="11" required/>
+            <input type="email" placeholder="E-Posta" id="EMail" name="EMail" required/>
+            <textarea placeholder="Mesaj" id="Message" name="Message"></textarea><br />
+            <button class="button-c tr">GÖNDER<i class="b-button-p"><i class="arrow-right"></i></i></button>
+        </form>
+    </div>
+    }
+    else if (@path == "en")
+    {
+         <div id="p-t-c" class="container">
+        
+        @if (ViewBag.success == "1")
+        {
+    
+            <div class="success-container">
+    <div class="success-inner">
+    Your message has reached us . We will get back to you as soon as possible.
+    </div>
+</div>
+        }
+
+        <h1>Contact</h1>
+        <h3><b>İSTANBUL AİRPORT TRANSFER</b></h3>
+        <p>Merkez Mah. 2.Bağlar Sok. No:13 D:11 Gaziosmanpaşa / İstanbul<br />
+            <b>Telephone :</b> +90 212 417 1047<br />
+            <b>E-mail :</b> info@transferistanbul.com.tr<br /><br />
+
+            <b>7/24 Available</b></p>
+        <div class="c-p-c">
+            <div class="a-d-c">
+                <div class="a-circle-c"><img src="/Content/images/c-man-icon.png" alt="phone-icon" /></div>
+                <p><b>Şükrü Türkkan</b><br />+90 539.601.1560</p>
+            </div>
+            <div class="a-d-c">
+                <div class="a-circle-c"><img src="/Content/images/c-man-icon.png" alt="phone-icon" /></div>
+                <p><b>Mehmet Doğru</b><br />+90 537.724.0271</p>
+            </div>
+        </div>
+        <form action="/@path/iletisimSend" method="post" name="form1">
+            <input type="text" placeholder="Name Surname" id="NameSurname" name="NameSurname" required/>
+            <input type="tel" placeholder="Phone" id="Phone" name="Phone" required/>
+            <input type="email" placeholder="E-Mail" id="EMail" name="EMail" required/>
+            <textarea placeholder="Message" id="Message" name="Message"></textarea><br />
+            <button class="button-c">SEND E-MAIL<i class="b-button-p"><i class="arrow-right"></i></i></button>
+        </form>
+    </div>
+    }
+    else
+    {
+     <div id="p-t-c" class="container">
+        
+        @if (ViewBag.success == "1")
+        {
+           <h2 style="color: red">
+Your message has reached us . We will get back to you as soon as possible.</h2> 
+        }
+
+        <h1>Contact</h1>
+        <h3><b>İSTANBUL AIRPORT TRANSFER</b></h3>
+        <p>Merkez Mah. 2.Bağlar Sok. No:13 D:11 Gaziosmanpaşa / İstanbul<br />
+            <b>Telephone :</b> +90 212 417 1047<br />
+            <b>E-mail :</b> info@transferistanbul.com.tr<br /><br />
+
+            <b>7/24 Available</b></p>
+        <div class="c-p-c">
+            <div class="a-d-c">
+                <div class="a-circle-c"><img src="/Content/images/c-man-icon.png" alt="phone-icon" /></div>
+                <p><b>Şükrü Türkkan</b><br />+90 539.601.1560</p>
+            </div>
+            <div class="a-d-c">
+                <div class="a-circle-c"><img src="/Content/images/c-man-icon.png" alt="phone-icon" /></div>
+                <p><b>Mehmet Doğru</b><br />+90 537.724.0271</p>
+            </div>
+        </div>
+        <form action="/@path/iletisimSend" method="post" name="form1">
+            <input type="text" placeholder="Name Surname" id="NameSurname" name="NameSurname" required/>
+            <input type="tel" placeholder="Phone" id="Phone" name="Phone" required/>
+            <input type="email" placeholder="E-Mail" id="EMail" name="EMail" required/>
+            <textarea placeholder="Message" id="Message" name="Message"></textarea><br />
+            <button class="button-c">SEND E-MAIL<i class="b-button-p"><i class="arrow-right"></i></i></button>
+        </form>
+    </div>
+    }
+   
+         </section>

@@ -1,0 +1,213 @@
+﻿@using wizardcms.Models
+@{
+    Layout = "~/Views/Shared/Home.cshtml";
+
+    var RotalarList = ViewData["RotalarList"] as anasayfaRotaDto;
+    var turList = (List<turDto>)ViewData["turList"];
+
+    var ucusFirsatList = (List<tblFirsatlar>)ViewData["ucusFirsatList"];
+    var otelFirsatList = (List<tblFirsatlar>)ViewData["otelFirsatList"];
+    
+    var path = Request.CurrentExecutionFilePath.ToString();
+    var ayrac = path.Split('/');
+    int pathType = 0;
+    if (path == "/" || path == "" || path == "en")
+    {
+        path = "tr";
+        pathType = 1;
+    }
+    else
+    {
+        string newPath = path.Substring(0, 3);
+        if (newPath == "/en")
+        {
+            path = "en";
+            pathType = 2;
+        }
+        else if (newPath == "/ru")
+        {
+            path = "ru";
+            pathType = 3;
+        }
+        else
+        {
+            path = "tr";
+            pathType = 1;
+        }
+    }
+}
+
+<section id="populer-transfers">
+    <div id="p-t-b"></div>
+    <div id="p-t-c" class="container">
+     @if (@path == "tr")
+     {
+        <h1>Popüler Transferler</h1>
+     }
+     else if (@path == "en")
+     {
+         <h1>Populer Transfers</h1>
+     }
+     else
+     {
+        <h1>Populer Transfers</h1>
+     }
+   
+        @MvcHtmlString.Create(RotalarList.Body)
+            
+        @if (@path == "tr")
+        {
+            <a href="/tr/transfer" class="button-c tr">TÜM FİYATLAR<div class="b-button-p"><i class="arrow-right"></i></div></a>
+        }
+        else if (@path == "ru")
+        {
+            <a href="/en/transfers" class="button-c">ALL PRICES<div class="b-button-p"><i class="arrow-right"></i></div></a>
+        }
+        else
+        {
+          <a href="/en/transfers" class="button-c">ALL PRICES<div class="b-button-p"><i class="arrow-right"></i></div></a>
+        }
+        
+        
+
+    </div>
+    
+</section>
+
+
+<!--<section id="how-it-works">
+   
+    <div id="h-w-c" class="container">
+        
+    @if (@path == "tr")
+    {
+          <h1>FIRSATLAR</h1>
+        
+    }
+    else if (@path == "en")
+    {
+  <h1>OPPERTUNITIES</h1>
+       
+    }
+    else
+    {
+          <h1>OPPERTUNITIES</h1>
+       
+    }
+
+      
+            <div id="oppertunity-c">
+                <h3>Otel Fırsatları<i class="g-dot"></i>Uçuş Fırsatları</h3>
+                <div class="v-container" id="hotels">
+	            <ul class="v-news">
+@foreach (var item in otelFirsatList)
+                {
+                    <li>
+                        @if (@item.Path != null)
+                        {
+                            <img src="@item.Path"/>
+                        }
+                        else
+                        {
+            <img src="http://placehold.it/75x75"/>
+                        }
+                        
+                        <p>@item.Aciklama</p>
+                    </li> 
+                }
+                    	
+
+	</ul>
+                </div>
+                <div class="v-container" id="flights">
+             	<ul class="v-news">
+
+		@foreach (var item in ucusFirsatList)
+                {
+                    <li>
+                        @if (@item.Path != null)
+                        {
+                            <img src="@item.Path"/>
+                        }
+                        else
+                        {
+            <img src="http://placehold.it/75x75"/>
+                        }
+                        
+                        <p>@item.Aciklama</p>
+                    </li> 
+                }
+	</ul>
+                </div>
+            </div>
+               
+        
+    </div></section>-->
+
+
+    <section id="tours">
+           <div id="t-b"></div>
+<div id="t-c" class="container">
+    @if (@path == "tr")
+    {
+        <h1>Turlar</h1>
+    }
+    else if (@path == "en")
+    {
+        <h1>Tours</h1>
+    }
+    else
+    {
+        <h1>Tours</h1>
+    }
+
+           
+    <h3>Sultanahmet<i class="g-dot"></i>Dolmabahçe Palace<br />Bosphorus Cruise<i class="g-dot"></i>Byzantine & Ottoman Relics</h3>
+    <div id="slider">
+                
+                
+        @foreach (var item in turList)
+        {
+            if (@path == "tr")
+            {
+                <div class="picture-container item">
+                     <a href="/tr/turlar/@item.Url"> 
+                        <i class="arrow-corner"><p>@item.TurZamani</p></i>
+                        <i class="d-b"></i><h2>@item.TurAdi</h2>
+                        <img src="@item.MajorPath" />
+                    </a>
+                </div>
+                    
+            }
+            else if (@path == "en")
+            {
+                <div class="picture-container item">
+                    <a href="/en/tours/@item.Url"> 
+                        <i class="arrow-corner"><p>@item.TurZamani</p></i>
+                        <i class="d-b"></i><h2>@item.TurAdi</h2>
+                        <img src="@item.MajorPath" />
+                    </a>
+
+                </div>
+
+            }
+            else
+            {
+                <div class="picture-container item">
+                    <a href="/en/tours/@item.Url"> 
+                        <i class="arrow-corner"><p>@item.TurZamani</p></i>
+                        <i class="d-b"></i><h2>@item.TurAdi</h2>
+                        <img src="@item.MajorPath" />
+                    </a>
+
+                </div>
+            }
+        }
+                           
+                      
+                   
+    </div>
+</div>
+        </section>
+      
+     

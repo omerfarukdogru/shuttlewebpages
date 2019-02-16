@@ -1,0 +1,9 @@
+﻿@model wizardcms.Models.Menu
+@using wizardcms.Models
+@using wizardcms.Helpers
+@{
+    Layout = null;
+}
+
+@Html.TreeView("locations", Model.root.sublinks, l => l.sublinks.OrderBy(f => f.Sort),
+            l => "<a lang='ru' href='" + Url.RouteUrl(l.routeValues) + "'>"+ l.Text +"</a>", (string)ViewData["highlight"],e=>e.type=="Ru",true)

@@ -1,0 +1,72 @@
+﻿@using wizardcms.Models
+@{
+   
+    Layout = "~/Views/Shared/Home.cshtml";
+    var sssList = (List<sssDto>)ViewData["sssList"];
+
+    var path = Request.CurrentExecutionFilePath.ToString();
+    var ayrac = path.Split('/');
+    int pathType = 0;
+    if (path == "/" || path == "" || path == "en")
+    {
+        path = "tr";
+        pathType = 1;
+    }
+    else
+    {
+        string newPath = path.Substring(0, 3);
+        if (newPath == "/en")
+        {
+            path = "en";
+            pathType = 2;
+        }
+        else if (newPath == "/ru")
+        {
+            path = "ru";
+            pathType = 3;
+        }
+        else
+        {
+            path = "tr";
+            pathType = 1;
+        }
+    }
+    
+}
+
+<main id="f-a-qPage">
+    <section id="faqPage">
+        <div id="p-t-b"></div>
+       
+        <div id="p-t-c" class="container">
+             @if (@path == "tr")
+             {
+                <h1>Sıkça Sorulan Sorular</h1>  
+             }
+             else if (@path == "en")
+             {
+                  <h1>Frequently Asked Questions?</h1>
+             }
+             else
+             {
+                  <h1>Frequently Asked Questions?</h1>
+             }
+
+            
+           
+               <div id="q-a-c">
+                 @foreach (var item in sssList)
+                 {
+                     <div class="question-container">
+                     <div class="question"><i class="fa fa-comment-o"></i> @item.Soru</div>
+                     <div class="answer">
+                       @item.Cevap
+                     </div>
+                 </div>
+                 }
+               </div>
+              </div>
+    
+       </section>
+</main>
+

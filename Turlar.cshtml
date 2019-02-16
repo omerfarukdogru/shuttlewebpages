@@ -1,0 +1,95 @@
+﻿@using wizardcms.Models
+@{
+   
+    Layout = "~/Views/Shared/Home.cshtml";
+
+    var turList = (List<turDto>)ViewData["turList"];
+}
+  @{
+        var path = Request.CurrentExecutionFilePath.ToString();
+        var ayrac = path.Split('/');
+        int pathType = 0;
+        if (path == "/" || path == "" || path == "en")
+        {
+            path = "tr";
+            pathType = 1;
+        }
+        else
+        {
+            string newPath = path.Substring(0, 3);
+            if (newPath == "/en")
+            {
+                path = "en";
+                pathType = 2;
+            }
+            else if (newPath == "/ru")
+            {
+                path = "ru";
+                pathType = 3;
+            }
+            else
+            {
+                path = "tr";
+                pathType = 1;
+            }
+        }   
+  }
+
+<main id="toursPage">
+    <section id="tours">
+        <div id="t-b"></div>
+        <div id="t-c" class="container">
+            @if (@path == "tr")
+            {
+                  <h1>Turlar</h1>
+            }
+            else if (@path == "en")
+            {
+                  <h1>Tours</h1>
+            }
+            else
+            {
+    <h1>Tours</h1>
+            }       
+            <h3>Sultanahmet<i class="g-dot"></i>Dolmabahçe Palace<br />Bosphorus Cruise<i class="g-dot"></i>Byzantine & Ottoman Relics</h3>
+             
+            @foreach (var item in turList)
+            {
+                if (@path == "tr")
+                {
+                    <div class="picture-container item tour-p">
+                        <a href="/tr/turlar/@item.Url"> 
+                            <i class="arrow-corner"><p>@item.TurZamani</p></i>
+                            <i class="d-b"></i>
+                            <h2>@item.TurAdi</h2>
+                            <img src="@item.MajorPath" />
+                        </a>
+                    </div>
+                }
+                else if (@path == "en")
+                {
+                    <div class="picture-container item tour-p">
+                        <a href="/en/tours/@item.Url"> 
+                            <i class="arrow-corner"><p>@item.TurZamani</p></i>
+                            <i class="d-b"></i>
+                            <h2>@item.TurAdi</h2>
+                            <img src="@item.MajorPath" />
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="picture-container item tour-p">
+                        <a href="/en/tours/@item.Url"> 
+                            <i class="arrow-corner"><p>@item.TurZamani</p></i>
+                            <i class="d-b"></i>
+                            <h2>@item.TurAdi</h2>
+                            <img src="@item.MajorPath" />
+                        </a>
+                    </div>
+                
+                }
+            }     
+        </div>
+    </section>
+</main>
